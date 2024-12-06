@@ -41,6 +41,10 @@ To work with Search Form, install the following dependencies:
    ```bash
    pip install -r requirements.txt
    ```
+4. Install test:  
+   ```bash
+   pytest
+   ```
 
 ---
 
