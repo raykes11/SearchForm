@@ -8,8 +8,9 @@ client = TestClient(app=app)
 def test_tinydb():
     assert len(tinydb_form()) >= 0
 
+
 def test_get():
-    response = client.get('/')
+    response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {"massage": "Hello index!"}
 
@@ -21,7 +22,7 @@ def test_post_user_true_request():
         "birth_date": "01.01.1985",
         "email": "test@example.com",
     }
-    response = client.post('/', json=user_true)
+    response = client.post("/", json=user_true)
     assert response.status_code == 200
     assert response.json() == "Model: User"
     print(response.json())
@@ -34,7 +35,7 @@ def test_post_company_true_request():
         "profile": "01.01.1985",
         "company_email": "test@example.com",
     }
-    response = client.post('/', json=company_true)
+    response = client.post("/", json=company_true)
     assert response.status_code == 200
     assert response.json() == "Model: Company"
     print(response.json())
@@ -47,9 +48,14 @@ def test_post_user_false_request():
         "birth_date": "01.011985",
         "email": "test@examplecom",
     }
-    response = client.post('/', json=user_false)
+    response = client.post("/", json=user_false)
     assert response.status_code == 200
-    assert response.json() == {'birth_date': 'str', 'email': 'str', 'phone': 'str', 'test': 'data'}
+    assert response.json() == {
+        "birth_date": "str",
+        "email": "str",
+        "phone": "str",
+        "test": "data",
+    }
     print(response.json())
 
 
@@ -60,9 +66,14 @@ def test_post_company_false_request():
         "profile": "01.021.1985",
         "company_email": "testexample.com",
     }
-    response = client.post('/', json=company_false)
+    response = client.post("/", json=company_false)
     assert response.status_code == 200
-    assert response.json() == {'company_email': 'str', 'company_phone': 'str', 'profile': 'str', 'test': 'data'}
+    assert response.json() == {
+        "company_email": "str",
+        "company_phone": "str",
+        "profile": "str",
+        "test": "data",
+    }
     print(response.json())
 
 
@@ -73,7 +84,12 @@ def test_post_noname_request():
         "test_date": "01.01.1985",
         "test_email": "test@example.com",
     }
-    response = client.post('/', json=noname)
+    response = client.post("/", json=noname)
     assert response.status_code == 200
-    assert response.json() == {'test_date': 'data', 'test_email': 'email', 'test_phone': 'phone', 'test_str': 'str'}
+    assert response.json() == {
+        "test_date": "data",
+        "test_email": "email",
+        "test_phone": "phone",
+        "test_str": "str",
+    }
     print(response.json())

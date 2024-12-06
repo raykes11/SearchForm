@@ -5,7 +5,7 @@ from pydantic import BaseModel, EmailStr, create_model, TypeAdapter
 from .custom_pydantic_class import Date, PhoneNumber
 from db_tiny.tinyDB import tinydb_form
 
-''' Функция для динамического создания модели на основе словаря (dict) '''
+""" Функция для динамического создания модели на основе словаря (dict) """
 
 
 def create_pydantic_model(data: Dict[str, Any]) -> Type[BaseModel]:
@@ -24,12 +24,12 @@ def create_pydantic_model(data: Dict[str, Any]) -> Type[BaseModel]:
             fields[name] = (str, ...)  # Для других полей используем строку
 
     # Динамически создаем модель с использованием Pydantic
-    name: str = data['name']
+    name: str = data["name"]
     name.title()
     return create_model(name, **fields)
 
 
-''' Запрос всех Pydantic model '''
+""" Запрос всех Pydantic model """
 
 
 def all_pydantic_model() -> List[Type[BaseModel]]:
@@ -41,10 +41,12 @@ def all_pydantic_model() -> List[Type[BaseModel]]:
     return list_pydantic_models
 
 
-''' Индификация модели с использованием Pydantic '''
+""" Индификация модели с использованием Pydantic """
 
 
-def identify_model(data: Dict[str, Any], models: List[Type[BaseModel]]) -> str | Dict[str, Any]:
+def identify_model(
+    data: Dict[str, Any], models: List[Type[BaseModel]]
+) -> str | Dict[str, Any]:
     for model in models:
         try:
             # Пытаемся провести валидацию
@@ -56,15 +58,15 @@ def identify_model(data: Dict[str, Any], models: List[Type[BaseModel]]) -> str |
     return parser_dict(data)
 
 
-''' Определение типов данных с использованием Pydantic '''
+""" Определение типов данных с использованием Pydantic """
 
 
 def parser_dict(data: Dict[str, Any]) -> Dict[str, Any]:
     models_type = {
-        'data': TypeAdapter(Date),
-        'phone': TypeAdapter(PhoneNumber),
-        'email': TypeAdapter(EmailStr),
-        'str': TypeAdapter(str),
+        "data": TypeAdapter(Date),
+        "phone": TypeAdapter(PhoneNumber),
+        "email": TypeAdapter(EmailStr),
+        "str": TypeAdapter(str),
     }
     fields = {}
     for name, value in data.items():

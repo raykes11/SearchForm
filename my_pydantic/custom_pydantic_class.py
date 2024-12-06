@@ -13,18 +13,18 @@ class Date(date):
 
     @classmethod
     def try_parse_date(cls, value: Any, info: core_schema.ValidationInfo) -> Any:
-        if value.count('-'):
+        if value.count("-"):
             try:
                 value = datetime.strptime(value, "%Y-%m-%d").date()
             except ValueError:
-                raise ValueError('Error format Data, use form %d.%m.%Y or %Y-%m-%d')
-        elif value.count('.'):
+                raise ValueError("Error format Data, use form %d.%m.%Y or %Y-%m-%d")
+        elif value.count("."):
             try:
                 value = datetime.strptime(value, "%d.%m.%Y").date()
             except ValueError:
-                raise ValueError('Error format Data, use form %d.%m.%Y or %Y-%m-%d')
+                raise ValueError("Error format Data, use form %d.%m.%Y or %Y-%m-%d")
         else:
-            raise ValueError('Error format Data, use form %d.%m.%Y or %Y-%m-%d')
+            raise ValueError("Error format Data, use form %d.%m.%Y or %Y-%m-%d")
         return value
 
     @classmethod
@@ -37,7 +37,7 @@ class Date(date):
 
     @classmethod
     def __get_pydantic_core_schema__(
-            cls, source_type: Any, handler: GetCoreSchemaHandler
+        cls, source_type: Any, handler: GetCoreSchemaHandler
     ) -> CoreSchema:
 
         return core_schema.chain_schema(
@@ -47,8 +47,7 @@ class Date(date):
                 ),
                 core_schema.with_info_plain_validator_function(
                     function=cls.try_parse_date,
-                )
-
+                ),
             ]
         )
 
@@ -60,14 +59,14 @@ class PhoneNumber(str):
     def parse_number(cls, value: Any, info: core_schema.ValidationInfo) -> Any:
         if not isinstance(value, str):
             raise ValueError(f"{value} type{type(value)} not str ")
-        if not re.match(r'^\+?\d{11}$', value):
+        if not re.match(r"^\+?\d{11}$", value):
             raise ValueError("Incorrect number format")
         else:
             return value
 
     @classmethod
     def __get_pydantic_core_schema__(
-            cls, source_type: Any, handler: GetCoreSchemaHandler
+        cls, source_type: Any, handler: GetCoreSchemaHandler
     ) -> CoreSchema:
 
         return core_schema.chain_schema(
