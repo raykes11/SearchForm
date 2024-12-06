@@ -1,8 +1,11 @@
+from pathlib import Path
+
 from tinydb import TinyDB
+BASE_DIR = Path(__file__).parent.parent
 
 
 def tinydb_form():
-    db_path = TinyDB('./db_tiny/db.json')
+    db_path = TinyDB(f'{BASE_DIR}/db_tiny/db.json')
     table = db_path.table('form')
     if len(table.all()) == 0:
         company = {
